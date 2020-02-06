@@ -149,9 +149,12 @@ void blink(void)
 {
 	
 	// Loop to make the LCD blink.
-	printAt(clockTimmerBlink, 3);
 	while(true)
 	{
+		
+		//lock the mutex or else it cat get clock blink var.
+		lock(&mutexPrime);
+		
 		
 		//Will start the blinking if 1 sec have passed. 20 * 50ms = 1s
 		if(clockTimmerBlink >= 20)
@@ -172,6 +175,8 @@ void blink(void)
 			
 			
 		}
+		//Unlock the mutex
+		unlock(&mutexPrime);
 		
 	}
 }
